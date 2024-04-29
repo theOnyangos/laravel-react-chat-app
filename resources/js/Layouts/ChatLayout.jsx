@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 const ChatLayout = ({ children }) => {
     const page = usePage();
     const conversations = page.props.conversations;
-    const selectedConversation = page.props.selectedConversations;
+    const selectedConversation = page.props.selectedConversation;
     const [onlineUsers, setOnlineUsers] = useState({});
     const [localConversations, setLocalConversations] = useState([]);
     const [sortedConversations, setSortedConversations] = useState(
@@ -134,7 +134,7 @@ const ChatLayout = ({ children }) => {
                     <TextInput
                         onKeyUp={onSearch}
                         placeholder="Filter Users and Groups"
-                        className="w-full"
+                        className="w-full dark:bg-gray-700 dark:text-slate-200"
                     />
                 </div>
 

@@ -49,7 +49,7 @@ const ConversationItem = ({
                 <UseAvatar
                     user={conversation}
                     online={online}
-                    className="w-10 h-10 rounded-full"
+                    className="w-14 h-14 rounded-full"
                 />
             )}
 

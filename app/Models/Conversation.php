@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 
 class Conversation extends Model
 {
@@ -45,5 +46,29 @@ class Conversation extends Model
         })->concat($groups->map(function (Group $group) {
             return $group->toConversationArray();
         }));
+    }
+
+    public static function updateConversationWithMessage($userId1, $userId2, $message)
+    {
+        // Find conversations, by user_id1 and user_id2 and update last message id
+        $conversation = Conversation::where(function ($query) use ($userId1, $userId2) {
+            $query->where('user_id1', $userId1)
+                ->where('user_id2', $userId2);
+        })->orWhere(function ($query) use ($userId1, $userId2) {
+            $query->where('user_id1', $userId2)
+                ->where('user_id2', $userId1);
+        })->first();
+
+        if ($conversation) {
+            $conversation->update([
+                'last_message_id' => $message->id,
+            ]);
+        } else {
+            Conversation::create([
+                'user_id1' => $userId1,
+                'user_id2' => $userId2,
+                'last_message_id' => $message->id
+            ]);
+        }
     }
 }
